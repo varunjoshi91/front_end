@@ -1,0 +1,54 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        const throttle = (fn, delay = 2000) => {
+            let last = 0;
+            return (...args) => {
+                const now = Date.now();
+                if (now - last < delay) {
+                    return;
+                }
+                last = now;
+                return fn(...args);
+            }
+        };
+
+        const debounce = (fn, delay = 2000) => {
+            let timerId;
+            return function(...args) {
+                if (timerId) {
+                    clearTimeout(timerId);
+                }
+                timerId = setTimeout(() => {
+                    fn(...args);
+                }, delay);
+            }
+        };
+
+        const doSomething = () => {
+            console.log('doing something');
+        };
+
+        const fetch = document.getElementById('fetch');
+        fetch.addEventListener('click', debounce(doSomething, 1000));
+
+        const interval_Id = setInterval(() => {
+            console.log('clicking');
+            fetch.dispatchEvent(new Event('click'));
+        }, 500);
+
+        
+        clear.addEventListener('click', () => {
+            clearInterval(interval_Id);
+            console.log('inside arrow', this);
+        });
+
+        clear.addEventListener('click', function() {
+            console.log('inside func', this);
+        });
+
+    </script>
+</body>
+</html>

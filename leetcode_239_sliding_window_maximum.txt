@@ -1,0 +1,35 @@
+https://leetcode.com/problems/sliding-window-maximum/submissions/
+
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var maxSlidingWindow = function(nums, k) {
+    const result = [];
+    const queue = [];
+    
+    for(let i = 0; i < nums.length; i++) {
+     
+        while (queue.length && nums[i] > queue[queue.length - 1]) {
+            queue.pop();
+        }
+        
+        queue.push(nums[i]);
+        
+        const j = i - k + 1;
+        
+        if (j < 0) {
+            continue;
+        }
+        
+        result.push(queue[0]);
+        
+        if (nums[j] === queue[0]) {
+            queue.shift();
+        }
+        
+    }
+    return result;
+};

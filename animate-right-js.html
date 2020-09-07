@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    .train {
+      position: relative;
+      cursor: pointer;
+      /* transition-property: left;
+      transition-duration: 2s;
+      transition-timing-function: ease-out; */
+      left: 0;
+    }
+
+    .move-left {
+      left: 80%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <img id="train" class="train" src="https://js.cx/clipart/train.gif">
+
+
+  <script>
+    train.onclick = function() {
+
+      let start = Date.now();
+      let timer_id = setInterval(() => {
+        if (Date.now() - start > 2000) {
+          clearInterval(timer_id);
+          return;
+        }
+        console.log('before', train.style.left);
+        train.style.left = (Date.now() - start)/5 + 'px';
+        console.log('after', train.style.left);
+      }, 20);
+      
+    }
+  </script>
+
+
+</body>
+
+</html>
