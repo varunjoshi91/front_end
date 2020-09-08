@@ -1,0 +1,57 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        let dict = {
+            'hello': 'Hola',
+            'Bye': 'Adios'
+        };
+
+        dict = new Proxy(dict, {
+            get(target, phrase) {
+                if (phrase in target) {
+                    return target[phrase];
+                } else {
+                    return phrase;
+                }
+            }
+        });
+
+        let nums = [1,2,3,4,5];
+
+        nums = new Proxy(nums, {
+            get(target, prop) {
+                if (prop < 0) {
+                    const idx = Math.abs(+prop + target.length) % target.length;
+                    return target[idx];
+                } else {
+                    return target[prop]
+                }
+            },
+            set(target, prop, value) {
+                if (prop < 0) {
+                    const idx = Math.abs(+prop + target.length) % target.length;
+                    target[idx] = value;
+                    return true;
+                } else {
+                    target[prop] = value;
+                    return true;
+                }
+            }
+        });
+
+        // nums = new Proxy(nums, {
+        //     set(target, prop, value) {
+        //         if (typeof value === 'number') {
+        //             console.log(prop, value);
+        //             target[prop] = value;
+        //             return true;
+        //         } else {
+        //             return false;
+        //         }
+        //     }
+        // });
+    </script>
+</body>
+</html>
