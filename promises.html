@@ -1,0 +1,33 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        const prom = new Promise((res, rej) => {
+            setTimeout(() => res('promise is resolved'), 1000);
+            // setTimeout(() => rej('promise is rejected'), 1000);
+        });
+
+        prom
+            .then((val) => {
+                console.log('after resolved: ', prom, val);
+                return new Promise((res, rej) => {
+                    setTimeout(() => {
+                        console.log('resolving with abc');
+                        rej('abc');
+                    }, 2000);
+                });
+            },
+            (val) => {
+                console.log('inside then rejected: ', prom, val);
+            })
+            .catch((val) => {
+                console.log('caught as well: ', prom, val);
+            })
+            .finally(() => {
+                console.log('running finally');
+            })
+            .then(val => console.log('Im catching this after finally', val));
+    </script>
+</body>
+</html>
