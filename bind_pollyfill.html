@@ -1,0 +1,18 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        const sum = (a, b) => a + b;
+
+        Function.prototype.myBind = function(thisArg, ...args) {
+            return (...args2) => {
+                return this.apply(thisArg, [...args, ...args2]);
+            }
+        };
+
+        const mySum = sum.myBind(this, 5);
+        console.log(mySum(6));
+    </script>
+</body>
+</html>
