@@ -7,7 +7,7 @@
  * @param {number} depth
  */
 function flat(arr, depth = 1) {
-  // your imeplementation here
+  // your implementation here
   const result = [];
   
   for(const elem of arr) {

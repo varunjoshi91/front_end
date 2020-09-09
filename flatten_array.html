@@ -1,0 +1,72 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        const arr = [
+            [
+                [
+                    1,
+                    2,
+                    3,
+                    [
+                        8,
+                        9
+                    ]
+                ],
+                7
+            ],
+            4,
+            5,
+            6
+        ];
+
+        // Default
+        console.log(arr.flat(2));
+
+        const flatten_rec = (arr) => {
+            let resultantArr = [];
+
+            for(let i = 0; i < arr.length; i++) {
+                if (Array.isArray(arr[i])) {
+                    resultantArr.push(...flatten_rec(arr[i]));
+                } else {
+                    resultantArr.push(arr[i]);
+                }
+            }
+            return resultantArr;
+        }
+
+        const flatten_rec_depth = (arr, depth) => {
+            let result = [];
+            for(const elem of arr) {
+                if (Array.isArray(elem) && depth > 0) {
+                    result.push(...flatten_rec_depth(elem, depth - 1));
+                } else {
+                    result.push(elem);
+                }
+            }
+            return result;
+        }
+
+        const flatten_iterative_depth = (arr, depth) => {
+            const result = [];
+            const stack = arr.map(i => [i, depth]);
+
+            while(stack.length) {
+                const [elem, localDepth] = stack.pop();
+
+                if (Array.isArray(elem) && localDepth > 0) {
+                    stack.push(...elem.map(i => [i, localDepth - 1]));
+                } else {
+                    result.push(elem);
+                }
+            }
+            return result.reverse();
+        }
+
+        console.log(flatten_iterative_depth(arr, 2));
+
+    </script>
+</body>
+</html>
