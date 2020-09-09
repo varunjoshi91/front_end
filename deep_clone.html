@@ -1,0 +1,79 @@
+<html>
+<body>
+    <button id="fetch">Fetch</button>
+    <button id="clear">Clear</button>
+    <script>
+        const obj = {
+            'key': 'value',
+            'newObj': {
+                'p': 'q',
+                'x': {
+                    'a': 'b'
+                }
+            }
+        }
+
+        const deepCopy = (obj) => {
+            const returnObj = {};
+
+            for(const prop in obj) {
+                if (typeof obj[prop] === 'object') {
+                    returnObj[prop] = deepCopy(obj[prop]);
+                } else {
+                    returnObj[prop] = obj[prop];
+                }
+            }
+            return returnObj;
+        }
+
+        const shallowCopy_es6 = {...obj};
+        const shallowCopy_Object_assign = Object.assign({}, obj);
+        const shallowCopy_for_in = {};
+        const shallowCopy_Object_create = Object.create(obj);
+        const deepCopy_simple_fn = deepCopy(obj);
+        const deepCopy_json_stringify_parse = JSON.parse(JSON.stringify(obj));
+
+        for(const prop in obj) {
+            shallowCopy_for_in[prop] = obj[prop];
+        }
+
+        console.log('before obj', obj);
+        // console.log('before shallowCopy_es6', shallowCopy_es6);
+        // console.log('before shallowCopy_Object_assign', shallowCopy_Object_assign);
+        // console.log('before shallowCopy_for_in', shallowCopy_for_in);
+        // console.log('before shallowCopy_Object_create', shallowCopy_Object_create);
+        // console.log('before deepCopy_simple_fn', deepCopy_simple_fn);
+        console.log('before deepCopy_json_stringify_parse', deepCopy_json_stringify_parse);
+        
+        obj.newObj.x.a = 'varun';
+
+        console.log('after obj', obj.newObj.x.a);
+        // console.log('after shallowCopy_es6', shallowCopy_es6.newObj.x.a);
+        // console.log('after shallowCopy_Object_assign', shallowCopy_Object_assign.newObj.x.a);
+        // console.log('after shallowCopy_for_in', shallowCopy_for_in.newObj.x.a);
+        // console.log('after shallowCopy_Object_create', shallowCopy_Object_create.newObj.x.a);
+        console.log('after deepCopy_json_stringify_parse', deepCopy_json_stringify_parse.newObj.x.a);
+
+
+        /* Below object has different types which shows the pitfalls of using JSON.parse(JSON.stringify)
+           In this example, deepCopy simple function works much better
+
+        const experimental_obj = {
+                    a: new Date(),
+                    b: NaN,
+                    c: new Function(),
+                    d: undefined,
+                    e: function () { },
+                    f: Number,
+                    g: false,
+                    h: Infinity,
+                };
+
+        console.log(JSON.parse(
+                JSON.stringify(experimental_obj)
+            ));
+        console.log(deepCopy(experimental_obj)); */
+
+    </script>
+</body>
+</html>
