@@ -70,9 +70,27 @@
         }
 
         const path = getPath(rootA, nodeA);
-        const targetNode = walkThePath(rootB, path);
+        // const targetNode = walkThePath(rootB, path);
+        const targetNode = findDomNodeInTree(rootA, rootB, nodeA);
 
         console.log(nodeB === targetNode);
+
+        // Recursive solution
+        function findDomNodeInTree(rootA, rootB, targetNode) {
+            if (rootA === targetNode) {
+                return rootB;
+            }
+
+            var nodeB = null;
+
+            for (let i = 0; i < rootA.childNodes.length && nodeB === null; i++) {
+                nodeB = findDomNodeInTree(rootA.childNodes[i], rootB.childNodes[i], targetNode);
+            }
+
+            return nodeB;
+        }
+
+        
     </script>
 </body>
 

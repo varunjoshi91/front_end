@@ -1,0 +1,39 @@
+<!-- https://medium.com/javascript-in-plain-english/algorithms-101-convert-roman-numerals-to-integers-in-javascript-d3aba86a43d4 -->
+<html>
+<body>
+    <button id="count" data-count='0'>0</button>
+    <button id="clear">Clear</button>
+    <script>
+        const conversion = {
+            'M': 1000,
+            'D': 500,
+            'C': 100,
+            'L': 50,
+            'X': 10,
+            'V': 5,
+            'I': 1
+        };
+
+        const convert = (romanStr) => {
+            let total = 0;
+            const arr = romanStr.split('');
+
+            for(let i = 0; i < arr.length; i++) {
+                const num = arr[i];
+                const currentNum = conversion[num];
+                const nextNum = conversion[arr[i + 1]];
+                if (currentNum < nextNum) {
+                    total -= currentNum;
+                } else {
+                    total += currentNum;
+                }
+            }
+
+            return total;
+        };
+
+        console.log(convert('XII'));
+
+    </script>
+</body>
+</html>
