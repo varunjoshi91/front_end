@@ -1,0 +1,54 @@
+<html>
+<body>
+    <button id="count" data-count='0'>0</button>
+    <button id="clear">Clear</button>
+    <script>
+        class Store {
+            constructor() {
+                this._store = new Map();
+            }
+
+            get internalStore() {
+                return this._store;
+            }
+
+            get(node) {
+                return this.internalStore.get(node);
+            }
+
+            has(node) {
+                return this.internalStore.has(node);
+            }
+
+            remove(node) {
+                return this.internalStore.delete(node);
+            }
+            add(node, value) {
+                if (this.has(node)) {
+                    this.internalStore.set(node, this.get(node) + value);
+                } else {
+                    this.internalStore.set(node, value);
+                }
+            }
+        }
+
+        const store = new Store();
+
+        const countButton = document.getElementById('count');
+        const clearButton = document.getElementById('clear');
+
+        countButton.addEventListener('click', function() {
+            store.add(this, 5);
+            this.innerText = store.get(this);
+            this.dataset.count = +this.dataset.count + 5;
+        });
+
+        clearButton.addEventListener('click', function() {
+            store.remove(countButton);
+            countButton.innerText = 0;
+            countButton.dataset.count = 0;
+        });
+
+    </script>
+</body>
+</html>
