@@ -32,9 +32,7 @@
           clearInterval(timer_id);
           return;
         }
-        console.log('before', train.style.left);
         train.style.left = (Date.now() - start)/5 + 'px';
-        console.log('after', train.style.left);
       }, 20);
       
     }
