@@ -2,10 +2,16 @@
 <body>
     <button id="fetch">Fetch</button>
     <button id="clear">Clear</button>
-    <script>
+    <!-- <script src="javascript/promises_basics.js"></script> -->
+    <script src="javascript/basic.js"></script>
+    <!-- <script>
         const prom = new Promise((res, rej) => {
-            setTimeout(() => res('promise is resolved'), 1000);
+            // setTimeout(() => res('promise is resolved'), 2000);
             // setTimeout(() => rej('promise is rejected'), 1000);
+            res('resolved directly');
+            console.log('before return');
+            return;
+            console.log('after return');
         });
 
         prom
@@ -15,7 +21,7 @@
                     setTimeout(() => {
                         console.log('resolving with abc');
                         rej('abc');
-                    }, 2000);
+                    }, 4000);
                 });
             },
             (val) => {
@@ -28,6 +34,12 @@
                 console.log('running finally');
             })
             .then(val => console.log('Im catching this after finally', val));
-    </script>
+        
+        console.log('this is not a promise, so it runs the first');
+
+        prom.then(value => {
+            console.log('inside the second then', value);
+        });
+    </script> -->
 </body>
 </html>

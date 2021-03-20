@@ -21,7 +21,7 @@ function highlight(td) {
 
 
 
-<div id="menu">
+{/* <div id="menu">
   <button data-action="save">Save</button>
   <button data-action="load">Load</button>
   <button data-action="search">Search</button>
@@ -55,4 +55,4 @@ function highlight(td) {
   }
 
   new Menu(menu);
-</script>
+</script> */}

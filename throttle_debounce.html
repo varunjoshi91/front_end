@@ -32,9 +32,10 @@
         };
 
         const fetch = document.getElementById('fetch');
-        fetch.addEventListener('click', debounce(doSomething, 1000));
+        fetch.addEventListener('click', throttle(doSomething, 1000));
+        // fetch.addEventListener('click', doSomething);
 
-        const interval_Id = setInterval(() => {
+        /* const interval_Id = setInterval(() => {
             console.log('clicking');
             fetch.dispatchEvent(new Event('click'));
         }, 500);
@@ -47,7 +48,7 @@
 
         clear.addEventListener('click', function() {
             console.log('inside func', this);
-        });
+        }); */
 
     </script>
 </body>

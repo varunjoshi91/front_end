@@ -38,3 +38,18 @@ function sum(...elems) {
     console.log(arguments, elems);
     return elems.reduce((acc, i) => acc += i);
 }
+
+const progress = document.getElementById('progress');
+let i = 0;
+const count = () => {
+    do {
+        i++;
+        progress.innerHTML = i;
+    } while (i < 1e3);
+
+    if (i < 1e9) {
+        setTimeout(count);
+    }
+}
+
+count();

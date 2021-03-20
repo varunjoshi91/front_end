@@ -1,0 +1,42 @@
+<html>
+    <head></head>
+    <body>
+        <input type="text" placeholder="enter search term" id="search">
+
+        <script>
+
+            const debounce = (fn, delay = 1000) => {
+                let timerId;
+                return (...args) => {
+                    if (timerId) {
+                        clearTimeout(timerId);
+                    }
+                    timerId = setTimeout(() => {
+                        fn(...args);
+                    }, delay);
+                }
+            }
+
+            const throttle = (fn, delay = 1000) => {
+                let last = 0;
+                return (...args) => {
+                    let now = Date.now();
+                    if (now - last < delay) {
+                        return;
+                    }
+                    last = now;
+                    return fn(...args);
+                }
+            }
+
+            const searchText = document.getElementById('search');
+
+            const searchForSomething = (event) => {
+                console.log('searching for something', event.target.value);
+            };
+
+            searchText.addEventListener('input', throttle(searchForSomething, 2000));
+
+        </script>
+    </body>
+</html>
