@@ -30,7 +30,7 @@ function flat(arr, depth = 1) {
  * @param {number} depth
  */
 function flat(arr, depth = 1) {
-  // your imeplementation here
+  // your implementation here
   const result = [];
   const stack = arr.map(i => [i, depth]);
   
