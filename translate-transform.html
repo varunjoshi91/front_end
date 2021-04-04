@@ -7,7 +7,6 @@
     .circle {
       transition-property: width, height, margin-left, margin-top, background-color, transform;
       transition-duration: 10s;
-      transition-function: ease-out;
       position: fixed;
       background-color: red;
       border-radius: 50%;
@@ -30,7 +29,7 @@
   function showCircle(cx, cy, radius) {
 
     // circle.className += ' animate-circle ';
-    circle.classList.add('animate-circle');
+    circle.classList.toggle('animate-circle');
     // let div = circle;
     // div.style.width = 0;
     // div.style.height = 0;
