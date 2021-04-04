@@ -34,12 +34,16 @@
     color: inherit;
 }
 
+.download a i {
+    font-size: 18px;
+}
+
 .status {
     text-transform: capitalize;
     display: flex;
     align-items: center;
     position: relative;
-    padding-left: 20px;
+    padding-left: 25px;
 }
 
 .status > div {

@@ -108,9 +108,16 @@ gridBody.addEventListener('click', (event) => {
 
 // click of the selectAll checkbox
 // toggles state of all ENABLED checkboxes
-selectAll.addEventListener('click', () => {
+selectAll.addEventListener('click', (event) => {
     const getCheckedBoxes = document.querySelectorAll('.grid-body input:not([disabled])');
-    getCheckedBoxes.forEach(checkbox => checkbox.checked = !checkbox.checked);
+    getCheckedBoxes.forEach(checkbox => {
+        checkbox.checked = event.target.checked;
+        if (checkbox.checked) {
+            checkbox.parentNode.classList.add('selected');
+        } else {
+            checkbox.parentNode.classList.remove('selected');
+        }
+    });
     handleCheckboxes();
 });
 

@@ -6,34 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download list</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Added access to bootstrap JUST for the download icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Downloadable list</h1>
 
-    <div class="container">
-        <div class="download-widget">
-
-            <div class="grid-head">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="select-all" id="select-all">
-                </div>
-                <div class="selected-count bigger-font">
-                </div>
-                <div class="download bigger-font">
-                    <a href="javascript:void(0)">
-                        Download Selected
-                    </a>
-                </div>
+    <div class="download-widget">
+        <div class="grid-head">
+            <div class="checkbox-container">
+                <input type="checkbox"
+                       name="select-all"
+                       id="select-all">
             </div>
-
-            <div class="grid-body">
-                <div class="grid-body-title">
-                    <div></div>
-                    <div>Name</div>
-                    <div>Device</div>
-                    <div>Path</div>
-                    <div class="status">Status</div>
-                </div>
+            <div class="selected-count bigger-font">
+            </div>
+            <div class="download bigger-font">
+                <a href="javascript:void(0)">
+                    <i class="glyphicon glyphicon-download-alt"></i> Download Selected
+                </a>
+            </div>
+        </div>
+    
+        <div class="grid-body">
+            <div class="grid-body-title">
+                <div></div>
+                <div>Name</div>
+                <div>Device</div>
+                <div>Path</div>
+                <div class="status">Status</div>
             </div>
         </div>
     </div>
