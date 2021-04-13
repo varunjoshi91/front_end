@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="width=device-width">
+        <title>Facebook DOM Traversal</title>
+    </head>
+
+    <body>
+        <div id="rootA">
+            <div>
+                <div></div>
+            </div>
+
+            <div></div>
+
+
+            <div>
+                <div>
+                    <div id="nodeA"></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rootB">
+            <div>
+                <div></div>
+            </div>
+
+            <div></div>
+
+            <div>
+                <div>
+                    <div id="nodeB"></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const rootA = document.getElementById('rootA');
+            const rootB = document.getElementById('rootB');
+
+            const nodeA = document.getElementById('nodeA');
+            const nodeB = document.getElementById('nodeB');
+
+            const getSymmetricNode = (root1, root2, node) => {
+
+                const getIdx = node => {
+                    if (!node) {
+                        return -1;
+                    }
+                    const parent = node.parentNode;
+                    return Array.from(parent.childNodes).indexOf(node);
+                }
+
+                // Bottoms up: start from Node A and go up towards Root A
+                // Each step get parentNode and then check it's index
+                const getPath = (root, node) => {
+                    const path = [];
+                    let currNode = node;
+
+                    while (currNode && currNode !== root) {
+                        const idx = getIdx(currNode);
+                        path.push(idx);
+                        currNode = currNode.parentNode;
+                    }
+
+                    return path;
+                }
+
+                const path = getPath(root1, node);
+                let node2 = root2;
+                
+                while(path.length) {
+                    node2 = node2.childNodes[path.pop()];
+                }
+
+                /* for(let idx of path) {
+                    node2 = node2.childNodes[idx];
+                } */
+
+                return node2;
+            }
+
+            console.log(getSymmetricNode(rootA, rootB, nodeA) === nodeB);
+        </script>
+    </body>
+
+</html>

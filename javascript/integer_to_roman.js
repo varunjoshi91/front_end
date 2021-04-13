@@ -16,9 +16,6 @@
     const unitDigit = num % 10;
     
     return thousands[thousandthDigit] + hundreds[hundredthDigit] + tens[tenthDigit] + ones[unitDigit];
-    
-    
-    // return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
 };
 
 /**

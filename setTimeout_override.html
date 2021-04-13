@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <script>
+            let timeoutIds = [];
+            const ogTimeout = window.setTimeout;
+            setTimeout = (callback, delay) => {
+                const id = ogTimeout(callback, delay);
+                timeoutIds.push(id);
+                return timeoutIds;
+            }
+
+            const log = () => console.log('varun is god');
+            
+            setTimeout(log, 3000);
+            setTimeout(log, 3000);
+            setTimeout(log, 3000);
+            setTimeout(log, 3000);
+            const ids = setTimeout(log, 3000);
+            for(let i = 0; i < 3; i++) {
+                clearTimeout(ids[i]);
+            }
+        </script>
+    </body>
+</html>
