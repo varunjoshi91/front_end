@@ -6,9 +6,9 @@ class Node {
     }
 }
 
-class BinarySearchTree {
-    constructor(root) {
-        this.root = new Node(root);
+class BST {
+    constructor(node) {
+        this.root = new Node(node);
     }
 
     insertIteratively(newVal) {
@@ -17,44 +17,45 @@ class BinarySearchTree {
 
         while(currNode) {
             parentNode = currNode;
-            if (newVal < currNode.val) {
+            if (newVal < currNode.leftChild) {
                 currNode = currNode.leftChild;
             } else {
                 currNode = currNode.rightChild;
             }
         }
 
-        if (newVal < parentNode.val) {
+        if (newVal < parentNode.leftChild) {
             parentNode.leftChild = new Node(newVal);
         } else {
             parentNode.rightChild = new Node(newVal);
         }
     }
 
-    insertRecursivly(newVal) {
+    insertRecursively(newVal) {
         if (this.root === null) {
             this.root = new Node(newVal);
             return;
         }
-        this.insertRecursivlyHelper(this.root, newVal);
+        this.insertRecursivelyHelper(this.root, newVal);
     }
 
-    insertRecursivlyHelper(currNode, newVal) {
-        if (!currNode) {
-            currNode = new Node(newVal);
-        } else if (currNode.val < newVal) {
-            currNode.leftChild = this.insertRecursivlyHelper(currNode.leftChild, newVal);
+    insertRecursivelyHelper(node, newVal) {
+        if (!node) {
+            node = new Node(newVal);
+        } else if (newVal < node.val) {
+            node.leftChild = this.insertRecursivelyHelper(node.leftChild, newVal);
         } else {
-            currNode.rightChild = this.insertRecursivlyHelper(currNode.rightChild, newVal);
+            node.rightChild = this.insertRecursivelyHelper(node.rightChild, newVal);
         }
-        return currNode;
+
+        return node;
     }
 
     preOrderTraversal(currNode) {
         if (!currNode) {
             return;
         }
-        console.log(currNode.val);
+        console.log(currNode);
         this.preOrderTraversal(currNode.leftChild);
         this.preOrderTraversal(currNode.rightChild);
     }
@@ -63,33 +64,33 @@ class BinarySearchTree {
         if (!currNode) {
             return;
         }
-        this.inOrderTraversal(currNode.leftChild);
-        console.log(currNode.val);
-        this.inOrderTraversal(currNode.rightChild);
+        this.preOrderTraversal(currNode.leftChild);
+        console.log(currNode);
+        this.preOrderTraversal(currNode.rightChild);
     }
 
     postOrderTraversal(currNode) {
         if (!currNode) {
             return;
         }
-        this.postOrderTraversal(currNode.leftChild);
-        this.postOrderTraversal(currNode.rightChild);
-        console.log(currNode.val);
+        this.preOrderTraversal(currNode.leftChild);
+        this.preOrderTraversal(currNode.rightChild);
+        console.log(currNode);
     }
 
-    search(val) {
+    search(newVal) {
         let currNode = this.root;
-        while(currNode && currNode.val != val) {
-            if (val < currNode.val) {
+        while(currNode && currNode.val !== newVal) {
+            if (newVal < currNode.val) {
                 currNode = currNode.leftChild;
             } else {
                 currNode = currNode.rightChild;
             }
         }
-        if (currNode.val === val) {
+        if (currNode && currNode.val === newVal) {
             return currNode;
         } else {
-            throw new Error('not found');
+            throw new Error('node not found');
         }
     }
 
@@ -97,11 +98,12 @@ class BinarySearchTree {
         if (!currNode) {
             return false;
         }
+
         let parentNode = null;
         
-        while (currNode && currNode.val !== val) {
+        while(currNode && currNode.val !== val) {
             parentNode = currNode;
-            if (val < currNode.leftChild) {
+            if (val < currNode.val) {
                 currNode = currNode.leftChild;
             } else {
                 currNode = currNode.rightChild;
@@ -112,12 +114,12 @@ class BinarySearchTree {
             return false;
         }
 
+        // when its a leaf node
         if (!currNode.leftChild && !currNode.rightChild) {
-            if (currNode.val === this.root.val) {
+            if (this.root.val === val) {
                 this.root = null;
                 return true;
-            }
-            if (parentNode.leftChild = currNode) {
+            } else if (parentNode.leftChild === currNode) {
                 parentNode.leftChild = null;
                 return true;
             } else {
@@ -126,23 +128,26 @@ class BinarySearchTree {
             }
         }
 
+        // when it has a left child
         if (currNode.leftChild && !currNode.rightChild) {
-            if (currNode.val === this.root.val) {
+            if (this.root.val === val) {
                 this.root = currNode.leftChild;
                 return true;
-            } else if (currNode.leftChild.val < parentNode.val) {
+            } else if (parentNode.leftChild === currNode) {
                 parentNode.leftChild = currNode.leftChild;
                 return true;
             } else {
                 parentNode.rightChild = currNode.leftChild;
+                return true;
             }
         }
 
+        // when it has a right child
         if (!currNode.leftChild && currNode.rightChild) {
-            if (currNode.val === this.root.val) {
+            if (this.root.val === val) {
                 this.root = currNode.rightChild;
                 return true;
-            } else if (currNode.rightChild.val < parentNode.val) {
+            } else if (parentNode.leftChild === currNode) {
                 parentNode.leftChild = currNode.rightChild;
                 return true;
             } else {
@@ -151,17 +156,17 @@ class BinarySearchTree {
             }
         }
 
-
+        // when it has both children
         if (currNode.leftChild && currNode.rightChild) {
-            let minChild = currNode.rightChild;
-            while (minChild != null) {
-                minChild = minChild.leftChild;
+            let minRight = currNode.rightChild;
+            while (minRight.leftChild) {
+                minRight = minRight.leftChild;
             }
-            let temp = minChild.val;
-            this.delete(this.root, minChild.val);
-            currNode.val = temp;
+            let temp = minRight;
+
+            this.delete(this.root, minRight.val);
+            currNode = temp;
             return true;
         }
-
     }
 }
