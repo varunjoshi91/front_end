@@ -23,3 +23,23 @@
   
     return result;
   }
+
+
+  function flatten(root) {
+    let result = [];
+    if (!root) {
+      return result;
+    }
+
+    let queue = [root];
+
+    while(queue.length) {
+      const elem = queue.shift();
+      result.push(elem);
+      for(let child of elem.children) {
+        queue.push(child);
+      }
+    }
+
+    return result;
+  }

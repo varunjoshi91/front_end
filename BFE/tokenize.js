@@ -1,4 +1,4 @@
-
+// https://bigfrontend.dev/problem/create-a-tokenizer
 /**
  * @param {string} str
  * @return {Generator}

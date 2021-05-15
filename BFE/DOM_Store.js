@@ -72,3 +72,35 @@ class NodeStore {
       return NodeStore.VALUE_KEY in node
     }
   }
+
+
+  class NodeStore {
+
+    constructor() {
+      this.storageValue = '__nodeStoreKey__';
+      this.nodes = {};
+    }
+     /**
+     * @param {Node} node
+     * @param {any} value
+     */
+    set(node, value) {
+     node[this.storageValue] = Symbol();
+     this.nodes[node[this.storageValue]] = value;
+    }
+    /**
+     * @param {Node} node
+     * @return {any}
+     */
+    get(node) {
+     return this.nodes[node[this.storageValue]];
+    }
+    
+    /**
+     * @param {Node} node
+     * @return {Boolean}
+     */
+    has(node) {
+      return !!this.get(node);
+    }
+  }

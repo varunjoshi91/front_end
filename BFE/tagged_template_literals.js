@@ -17,3 +17,13 @@ function html(strings, ...values) {
     // your code here
     container.innerHTML = result;
   }
+
+  /* 
+  function render(result, container) {
+  // your code here
+  let child = document.createElement('div');
+  child.innerHTML = result;
+  child = child.firstChild;
+  container.appendChild(child);
+}
+ */

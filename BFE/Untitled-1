@@ -1,0 +1,149 @@
+/* Welcome to Facebook!
+
+This is just a simple shared plaintext pad, with no execution capabilities.
+
+When you know what language you would like to use for your interview,
+simply choose it from the dropdown in the top bar.
+
+Enjoy your interview! */
+
+
+
+
+/***** Implement the memoize function below *****/
+
+function memoize(funcA) {
+// code goes here
+  const cache = new Map();
+  
+  return function(...args) {
+    
+    if (cache.has(args)) {
+      return cache.get(args);
+    }
+    
+    const result = funcA.apply(this, args);
+    cache.set(args, result);
+    
+    return result;
+  }
+}
+
+function expensiveFunc(y) {
+  // Pretend some expensive calculation happens here.
+  return y * 10;
+};
+
+const expensiveFuncMemoized = memoize(expensiveFunc);
+
+expensiveFuncMemoized(5); // 50 returned (expensiveFunc called and 50 is stored)
+expensiveFuncMemoized(5); // 50 returned (expensiveFunc not called)
+expensiveFuncMemoized(6); // 60 returned (expensiveFunc called and 60 is stored)
+expensiveFuncMemoized(5); // 50 returned (expensiveFunc not called)
+expensiveFuncMemoized(6); // 60 returned (expensiveFunc not called)
+
+function timesAll(x, y, z) {
+  // Some expensive calculation here.
+  return x * y * z;
+};
+
+const timesAllMemoized = memoize(timesAll);
+
+const a = () => {};
+const b = () => {};
+const c = () => {};
+// [a, b, c]
+timesAllMemoized(a, b, c);
+// [a, b, c]
+timesAllMemoized(a, b, c);
+
+function areArraysEqual(arr1, arr2) {
+  
+  // O(mn)
+  
+  // O(m + n), O(m|n)
+  
+}
+
+timesAllMemoized(1, 5, 10); // 50 returned (timesAll called and 50 is stored)
+timesAllMemoized(5, 1, 10); // 50 returned (timesAll called and 50 is stored)
+timesAllMemoized(1, 5, 10); // 50 returned (timesAll not called)
+
+
+
+
+
+class Emitter {
+
+  constructor() {
+    this.cache = {};
+  }
+  
+  subscribe(event_name, callback) {
+  
+    if (!this.cache[event_name]) {
+      this.cache[event_name] = [];
+    }
+    
+    const objectWithCallback = { callback };
+    
+    this.cache[event_name].push(objectWithCallback);
+    
+    const release = () => {
+      
+      if (this.cache[event_name].length > 1) {
+        const idx = this.cache[event_name].indexOf(objectWithCallback);
+        this.cache[event_name].splice(idx, 1);
+      } else {
+        delete this.cache[event_name];
+      }
+      return true;
+    }
+    
+    return {
+      release
+    }
+  
+  }
+  
+  emit(event_name, ...args) {
+  
+      if (!this.cache[event_name]) {
+        return;
+      }
+    
+      const callbacks = this.cache[event_name];
+    
+      callbacks.forEach(obj => {
+        obj.callback.apply(this, args);
+      });
+  }
+    
+  
+}
+
+
+/* 
+ * Create an Emitter that can be used to collect/release 
+ * subscriptions to custom events that it emits.
+ */
+
+emitter = new Emitter();
+
+// 1. Support subscribing to events.
+sub1 = emitter.subscribe('event_name', callback1);
+sub2 = emitter.subscribe('event_name', callback1);
+
+// 2. Support emitting events.
+// This particular example should lead to the `callback` above being invoked with `foo` and   `bar` as parameters.
+emitter.emit('event_name', foo, bar);
+
+// 3. Support unsubscribing existing subscriptions by releasing them.
+sub1.release(); // `sub` is the reference returned by `subscribe` above
+sub1.release();
+
+emitter.emit('event_name', foo, bar);
+
+/***** Implement EventEmitter below *****/
+
+

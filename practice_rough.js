@@ -663,7 +663,7 @@ Promise.prototype.myPromiseAll = function(arr) {
                 if (promiseCompleted >= arr.length) {
                     resolve(result);
                 }
-            }).catch(err => rej(err));
+            }).catch(err => reject(err));
         });
     });
 }

@@ -6,14 +6,20 @@
     .train {
       position: relative;
       cursor: pointer;
-      /* transition-property: left;
+      /* transition-property: transform;
       transition-duration: 2s;
       transition-timing-function: ease-out; */
+      transition: transform 3s ease-in-out;
+      transform: translate(0, 0);
       left: 0;
     }
 
     .move-left {
       left: 80%;
+    }
+
+    .move-right {
+      transform: translate(1200px, 0);
     }
   </style>
 </head>
@@ -24,7 +30,49 @@
 
 
   <script>
-    train.onclick = function() {
+
+    const train = document.getElementById('train');
+
+    /* train.addEventListener('click', (event) => {
+      train.classList.toggle('move-right');
+    }); */
+
+    train.addEventListener('click', () => {
+      train.animate([
+        {
+          'transform': 'translate(1000px)'
+        }
+      ], {
+        duration: 3000,
+        iterations: 1
+      })
+    });
+
+    /* train.animate([
+        {
+          transform: 'translate(2100px)'
+        }
+      ], {
+        duration: 1000,
+        iterations: 1
+      }) */
+    
+    /* const moveElem = (elem, timeDuration) => {
+      elem.style.left = timeDuration/5 + 'px';
+    }
+
+    train.addEventListener('click', (event) => {
+      let start = Date.now();
+      let interval = setInterval(() => {
+        if (Date.now() - start > 2000) {
+          clearInterval(interval);
+          return;
+        }
+        moveElem(train, Date.now() - start);
+      }, 20)
+    }); */
+
+    /* train.onclick = function() {
 
       let start = Date.now();
       let timer_id = setInterval(() => {
@@ -35,7 +83,7 @@
         train.style.left = (Date.now() - start)/5 + 'px';
       }, 20);
       
-    }
+    } */
   </script>
 
 

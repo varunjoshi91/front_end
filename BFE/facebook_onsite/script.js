@@ -56,3 +56,51 @@ const getTextBetweenNodes = (node1, node2) => {
 }
 
 console.log(getTextBetweenNodes(node1, node2));
+
+
+
+
+const getTextBetweenNodesVarun = (node1, node2) => {
+    let result = [];
+
+    const exploreNode = (node, result) => {
+        if (!node) {
+            return;
+        }
+        for(let child of node.childNodes) {
+            if (child.nodeType === Node.TEXT_NODE) {
+                const text = child.textContent().trim();
+                if (text && text.length) {
+                    result.push(text);
+                }
+            }
+        }
+
+        const children = Array.from(node1.children);
+        const idxOfNode2 = children.indexOf(node2);
+
+        if (idxOfNode2 > -1) {
+            children.slice(0, idxOfNode2).forEach(childNode => exploreNode(childNode, result));
+        } else {
+            children.forEach(childNode => exploreNode(childNode, result));
+        }
+
+    }
+
+    exploreNode(node1, result);
+
+    let currNode = node1;
+
+    while(currNode) {
+        let nextSibling = currNode.nextElementSibling;
+        
+        while(nextSibling) {
+            exploreNode(nextSibling, result);
+            nextSibling = nextSibling.nextElementSibling;
+        }
+
+        currNode = currNode.parentNode;
+    }
+
+    return result;
+}
