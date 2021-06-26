@@ -1,0 +1,116 @@
+Please use this Google doc during your interview (your interviewer will see what you write here). To free your hands for typing, we recommend using a headset or speakerphone.
+
+
+
+Edit?
+
+There is a database / file of all seats available. You want to present them to people such that:
+a person sees 10 seats at a time
+no two people should see the same seats at the same time
+they get 2 minutes to choose one of those seats or ask for more. If they choose one after the 2 minutes have expired, the request to buy one should fail.
+We expect web clients to try to cheat by asking for seats they didn't see.
+If a user asks for more seats, don't show me what you gave me a few minutes ago.
+You can assume the Google login to place so we can uniquely identify user requests.
+You should not let bad actors prevent the system from presenting available seats to other customers.
+
+Describe
+Where you would put the various data elements - in a database, application servers, front-ends or the browser.
+What those tables or data structures would look like
+How would various transactions change the data
+How choices affect robustness and scalability. How do we trade off time, space and correctness?
+
+
+
+
+Functional requirements:
+* Network: Getting the seats, purchasing process fast enough. Web app should be fast served
+* Make sure it's responsive, it's accessible, works on mobile, desktops, all devices
+* 
+
+
+Data structures:
+
+type User {
+  id: UIUD,
+  isPresentedWithSeats = false //
+}
+
+type Concert {
+  id: UIUD,
+  name: string,
+  description: string,
+  metadata: Metadata // singer/background-singers
+  seats: Seat[],
+  available_seats: Seat[] 
+}
+
+type Seat {
+  id: UIUD,
+  taken: boolean = false
+}
+
+
+* Single source of truth: Data is stored in a database in the backend. Flattened, Redis 
+
+
+DATA APIS:
+* getUser(api_key,userId) => User
+* getConcerts(api_key) => Concert[]    // Genre
+* CORS, 
+* getAvailableSeats(api_key, concertId, cursor) => Seat[]
+  // number of seats is a constant defined on the backend
+  // Cursor -> Pagination: userNeeds: 5 seats, startIndex: number, endIndex: number,
+* purchaseSeats(api_key, seatsSelected[]) 
+
+// timestamp is recorded on the backend, the first time getAvailableSeats is called, and from that we can infer, any call which is sooner than the 2 minute timeout, gets responded with a 400/500 (HTTP status code).
+
+// cache the timestamp in memory // ttl for the cache
+
+// API_KEy is valid, JWT token is valid
+
+// available_seats [number_of_seats]
+// user has defined the number of seats he needs
+
+if(userSelectedSeats === numberofSeats) {
+ allowToPurchase
+} else {
+  getAvailableSeats(_, _ 
+    startIndex: 5,
+   endIndex: 10 (5)
+ {
+  finalSeatSelection = Already_sent - onesSelected + numberOfSeats * selected
+
+}
+}
+
+
+Fetching this data
+* Polling every 2 minutes for refreshed seats which will be newer set of seats
+
+  * whenever getSeats, User.isPresentedWithSeats = true // multiple sessions
+    timeout (backend = 3mins) for isPresentedWithSeats = false,
+
+HTTP2 -> multiplexing
+-> bundleSplit
+-> saves 
+
+
+* WebSocket: constant connection
+* SSE: Http2: LoadBalancer : Unidirectional
+
+UI pov:
+
+10 seats: 10 DOM nodes,: DOM reflows, CSS reflows, ONly updating, not adding/deleting
+
+DOMfragment -> 10 nodes to this fragment
+append document.body Once.
+
+GZIP, Brotil
+
+Images: webP, Png 
+CDN
+
+JS: async
+
+
+

@@ -32,7 +32,7 @@ class Person2 extends Person1 {
     constructor(name) {
         super(name);
         this.name = name;
-        this.getName = function() {
+        this.getName = () => {
             console.log('inside getName', this.name, this);
         }
     }

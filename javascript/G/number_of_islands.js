@@ -51,7 +51,7 @@ let numIslands = function (grid) {
     let visited = grid.map(row => row.map(elem => false));
 
     for(let i = 0; i < grid.length; i++) {
-        for(let j = 0; i < grid[i].length; j++) {
+        for(let j = 0; j < grid[j].length; j++) {
             if (grid[i][j] === '0') {
                 visited[i][j] = true;
             }

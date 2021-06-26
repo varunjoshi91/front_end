@@ -1,0 +1,110 @@
+const sample = [
+  {
+    timestamp: '#123',
+    value: 50
+  },
+  {
+    timestamp: '#123',
+    value: 150
+  },
+  {
+    timestamp: '#222',
+    value: 150
+  }
+]
+
+const combineStreams = (sample1, sample2) => {
+  
+  if (!sample1 && !sample2) {
+    return []; // throw error
+  }
+  
+  if ((!sample1 || !sample1.length) && sample2) {
+    return sample2;
+  }
+  
+  if ((!sample2 || !sample2.length) && sample1) {
+    return sample1;
+  }
+  
+  const result = [];
+  
+  let p1 = 0, p2 = 0;
+  
+  while (p1 < sample1.length && p2 < sample2.length){
+    
+     if (sample1[p1].timestamp === sample2[p2].timestamp){
+      const addedValues = sample1[p1].value + sample2[p2].value;
+      result.push({
+        timestamp: sample1[p1].timestamp,
+        value: addedValues
+      });
+      p1++;
+      p2++;
+     } else if (sample1[p1].timestamp < sample2[p2].timestamp) { // Date.now() = 12314123 , Date.now() = 4834383
+       result.push(sample1[p1]);
+       p1++;
+     } else {
+       result.push(sample2[p2]);
+       p2++;
+     }
+  }
+  
+  if (p1 >= sample1.length) {
+    while(p2 < sample2.length) {
+      result.push(sample2[p2]);
+      p2++;
+    }
+  }
+  
+  if (p2 >= sample2.length) {
+    while(p1 < sample1.length) {
+      result.push(sample1[p1]);
+      p1++;
+    }
+  }
+
+  return result;
+}
+
+// O (m + n): space
+// O (m + n): time
+
+
+<div class="wrapper">
+
+  <div class="bar" *ngFor="let stamp of result; let i = index">
+  
+    <div class="value" [style.bottom]="getHeight(stamp.value)">{{stamp.value}}</div>
+    <div class="rect" [style.height]="getHeight(stamp.value)"></div>
+    <div class="time-stamp">{{stamp.timestamp}}</div>
+  
+  </div>
+  
+</div> 
+
+
+// css
+
+.bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.value {
+  position: relative;
+  left: 0;
+}
+
+.rect {
+  width: 30px;
+  background: blue
+  position: relative;
+  bottom: 0;
+}
+
+.time-stamp{
+  position: relative;
+  bottom: 5px;
+}

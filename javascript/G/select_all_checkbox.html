@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .checkbox-list {
+            margin: 5px 0 0 20px;
+        }
+
+        .checkbox-container {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cb-root">
+        <div class="checkbox-container">
+            <label for="canada">Canada</label>
+            <input id="canada"
+                   type="checkbox">
+            <div class="checkbox-list">
+                <div class="checkbox-container">
+                    <label for="ontario">Ontario</label>
+                    <input id="ontario"
+                           type="checkbox">
+                    <div class="checkbox-list">
+
+                        <div class="checkbox-container">
+                            <label for="ott">Ottawa</label>
+                            <input id="ott"
+                                   type="checkbox">
+                            <div class="checkbox-list">
+                            </div>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <label for="tor">Toronto</label>
+                            <input id="tor"
+                                   type="checkbox">
+                            <div class="checkbox-list">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="checkbox-container">
+                    <label for="quebec">Quebec</label>
+                    <input id="quebec"
+                           type="checkbox">
+                    <div class="checkbox-list">
+
+                        <div class="checkbox-container">
+                            <label for="mor">Montreal</label>
+                            <input id="mor"
+                                   type="checkbox">
+                            <div class="checkbox-list">
+                            </div>
+                        </div>
+
+                        <div class="checkbox-container">
+                            <label for="qc">Quebec City</label>
+                            <input id="qc"
+                                   type="checkbox">
+                            <div class="checkbox-list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const root = document.getElementById('cb-root');
+
+        const handleChildren = (elem) => {
+            if (!elem) {
+                return;
+            }
+            const closestParent = elem.closest('.checkbox-container');
+            const checkboxList = closestParent.querySelector('.checkbox-list');
+            if (!checkboxList || !checkboxList.children.length) {
+                return; // leaf checkboxes
+            }
+            const allCheckboxChildren = checkboxList.querySelectorAll('input');
+            // checking all children
+            for (const cb of allCheckboxChildren) {
+                cb.checked = elem.checked;
+            }
+        }
+
+        const handleParent = (elem) => {
+            if (!elem) {
+                return;
+            }
+            const parent = elem.parentNode.parentNode.closest('.checkbox-container');
+            if (!parent) {
+                return; // root node
+            }
+            const parentCheckBox = parent.querySelector('input');
+            const allChildren = parent.querySelector('.checkbox-list').querySelectorAll('input');
+            const allCheckedChildren = parent.querySelector('.checkbox-list').querySelectorAll('input:checked');
+            
+            if (allChildren.length === allCheckedChildren.length) {
+                parentCheckBox.indeterminate = false;
+                parentCheckBox.checked = true;
+            } else if (allCheckedChildren?.length) {
+                parentCheckBox.indeterminate = true;
+            } else {
+                parentCheckBox.indeterminate = false;
+                parentCheckBox.checked = false;
+            }
+
+            handleParent(parent);
+        }
+
+        root.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'INPUT') {
+                return;
+            }
+            // handle children
+            handleChildren(e.target);
+            // handle parents
+            handleParent(e.target);
+        });
+
+    </script>
+
+</body>
+
+</html>
